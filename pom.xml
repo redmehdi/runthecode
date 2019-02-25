@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.runthecode.process</groupId>
+	<artifactId>runthecode</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.5.RELEASE</version>
+		<relativePath/>
+	</parent>
+
+
+
+	<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- General properties -->
+<!-- 		<maven.compiler.source>1.8</maven.compiler.source> -->
+<!-- 		<maven.compiler.target>1.8</maven.compiler.target> -->
+<!-- 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
+<!-- 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding> -->
+
+		<!-- BOM versions -->
+		<javaee.api.version>7.0</javaee.api.version>
+		<arquillian.version>1.1.9.Final</arquillian.version>
+		<arquillian.rest.version>1.0.0.Alpha3</arquillian.rest.version>
+		<arquillian.selenium.version>2.48.2</arquillian.selenium.version>
+
+		<!-- Dependencies versions -->
+		<wildfly.version>8.2.1.Final</wildfly.version>
+		<commons.lang3.version>3.4</commons.lang3.version>
+		<commons.io.version>1.3.2</commons.io.version>
+		<primefaces.version>5.3</primefaces.version>
+
+		<!-- Testing dependecies versions -->
+		<!-- <junit.version>4.12</junit.version> -->
+		<!-- <hamcrest.version>2.0.0.0</hamcrest.version> -->
+		<!-- <easymock.version>3.4</easymock.version> -->
+		<!-- <equalsverifier.version>1.7.5</equalsverifier.version> -->
+		<!-- <jacoco.version>0.7.5.201505241946</jacoco.version> -->
+		<!-- <arquillian.jacoco.version>1.0.0.Alpha8</arquillian.jacoco.version> -->
+		<!-- <arquillian.persistence.dbunit.version>1.0.0.Alpha7</arquillian.persistence.dbunit.version> -->
+		<!-- <slf4j.version>1.5.10</slf4j.version> -->
+		<!-- <mysql.connector.java.version>5.1.21</mysql.connector.java.version> -->
+		<!-- <resteasy.version>3.0.13.Final</resteasy.version> -->
+		<!-- <graphene.webdrive.version>2.1.0.Alpha3</graphene.webdrive.version> -->
+
+		<!-- Plugins versions -->
+	</properties>
+
+
+	<modules>
+		<module>persistence</module>
+		<module>service</module>
+		<module>process</module>
+		<module>rest</module>
+		<module>tests</module>
+	</modules>
+
+
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-jpa</artifactId>
+				<version>2.0.5.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>persistence</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>rest</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>tests</artifactId>
+				<version>${project.version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+
+
+	</dependencyManagement>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+<!-- 				<version>2.0.5.RELEASE</version> -->
+			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 				<artifactId>maven-compiler-plugin</artifactId> -->
+<!-- 				<configuration> -->
+<!-- 					<source>1.8</source> -->
+<!-- 					<target>1.8</target> -->
+<!-- 					<verbose>true</verbose> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
+		</plugins>
+	</build>
+
+</project>
