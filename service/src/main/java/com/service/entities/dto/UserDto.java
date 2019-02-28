@@ -1,5 +1,9 @@
 package com.service.entities.dto;
 
+/**
+ * @author RMehdi
+ *
+ */
 public class UserDto {
 
 	private String id;
@@ -8,7 +12,7 @@ public class UserDto {
 
 	private String apellido;
 
-	private Long edad;
+	private String edad;
 
 	private String inscriptionDate;
 
@@ -18,8 +22,28 @@ public class UserDto {
 
 	private String changeBy;
 
-	public UserDto(String id, String nombre, String apellido, Long edad, String inscriptionDate, String telefono,
-			String email, String changeBy) {
+	/**
+	 * Construction to retrieve user
+	 * 
+	 * @param id
+	 * @param nombre
+	 * @param apellido
+	 * @param edad
+	 * @param inscriptionDate
+	 * @param telefono
+	 * @param email
+	 * @param changeBy
+	 */
+	public UserDto(
+			final String id, 
+			final String nombre, 
+			final String apellido, 
+			final String edad, 
+			final String inscriptionDate, 
+			final String telefono,
+			final String email, 
+			final String changeBy
+			) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -28,6 +52,29 @@ public class UserDto {
 		this.telefono = telefono;
 		this.email = email;
 		this.changeBy = changeBy;
+	}
+
+	/**
+	 * Constructor to store user
+	 * 
+	 * @param nombre
+	 * @param apellido
+	 * @param edad
+	 * @param inscriptionDate
+	 * @param telefono
+	 * @param email
+	 * @param changeBy
+	 */
+	public UserDto(
+			final String nombre, 
+			final String apellido, 
+			final String edad, 
+			final String inscriptionDate, 
+			final String telefono, 
+			final String email,
+			final String changeBy
+			) {
+		this(null, nombre, apellido, edad, inscriptionDate, telefono, email, changeBy);
 	}
 
 	public String getId() {
@@ -54,19 +101,15 @@ public class UserDto {
 		this.apellido = apellido;
 	}
 
-	public long getEdad() {
+	public String getEdad() {
 		return edad;
-	}
-
-	public void setEdad(long edad) {
-		this.edad = edad;
 	}
 
 	public String getInscriptionDate() {
 		return inscriptionDate;
 	}
 
-	public void setInscriptionDate(String inscriptionDate) {
+	public void setInscriptionDate(final String inscriptionDate) {
 		this.inscriptionDate = inscriptionDate;
 	}
 
@@ -74,7 +117,7 @@ public class UserDto {
 		return telefono;
 	}
 
-	public void setTelefono(String telefono) {
+	public void setTelefono(final String telefono) {
 		this.telefono = telefono;
 	}
 
@@ -82,7 +125,7 @@ public class UserDto {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 
@@ -94,42 +137,8 @@ public class UserDto {
 		this.changeBy = changeBy;
 	}
 
-	public void setEdad(Long edad) {
+	public void setEdad(final String edad) {
 		this.edad = edad;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (edad ^ (edad >>> 32));
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		UserDto other = (UserDto) obj;
-		if (edad != other.edad)
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
 	}
 
 	@Override

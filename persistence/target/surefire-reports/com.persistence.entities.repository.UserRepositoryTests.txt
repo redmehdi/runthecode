@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.persistence.entities.repository.UserRepositoryTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.243 s - in com.persistence.entities.repository.UserRepositoryTests
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.938 s - in com.persistence.entities.repository.UserRepositoryTests

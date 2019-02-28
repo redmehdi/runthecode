@@ -1,0 +1,3 @@
+com\persistence\entities\repository\UserRepositoryTests.class
+com\persistence\entities\repository\dataset\ContactDataset.class
+com\persistence\entities\repository\dataset\UserDataset.class

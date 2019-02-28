@@ -39,7 +39,7 @@ public class UserEntity extends BaseEntity implements IEntity<Long,String, Date,
 	@SuppressWarnings("unused")
 	private UserEntity() {
 	}
-
+	
 	/**
 	 * New record 
 	 * 
@@ -51,8 +51,15 @@ public class UserEntity extends BaseEntity implements IEntity<Long,String, Date,
 	 * @param edad
 	 * @param inscriptionDate
 	 */
-	public UserEntity(String createdNameBy, String modifiedNameBy, ContactEntity contact, String nombre, String apellido,
-			long edad, Date inscriptionDate) {
+	public UserEntity(
+			final String createdNameBy, 
+			final String modifiedNameBy, 
+			final ContactEntity contact, 
+			final String nombre, 
+			final String apellido,
+			final Long edad, 
+			final Date inscriptionDate
+			) {
 		super(createdNameBy, modifiedNameBy);
 		this.contact = contact;
 		this.nombre = nombre;
@@ -61,8 +68,14 @@ public class UserEntity extends BaseEntity implements IEntity<Long,String, Date,
 		this.inscriptionDate = inscriptionDate;
 	}
 	
-	public UserEntity(String modifiedNameBy, ContactEntity contact, String nombre, String apellido, long edad,
-			Date inscriptionDate) {
+	public UserEntity(
+			final String modifiedNameBy, 
+			final ContactEntity contact, 
+			final String nombre, 
+			final String apellido, 
+			final Long edad,
+			Date inscriptionDate
+			) {
 		super(modifiedNameBy);
 		this.contact = contact;
 		this.nombre = nombre;
@@ -87,10 +100,10 @@ public class UserEntity extends BaseEntity implements IEntity<Long,String, Date,
 		return apellido;
 	}
 
-	public long getEdad() {
+	public Long getEdad() {
 		return edad;
 	}
-
+	
 	public Date getInscriptionDate() {
 		return inscriptionDate;
 	}
@@ -100,6 +113,5 @@ public class UserEntity extends BaseEntity implements IEntity<Long,String, Date,
 		return String.format("UserEntity [id=%s, nombre=%s, apellido=%s, edad=%s, inscriptionDate=%s, contact=%s]", super.getId(),
 				nombre, apellido, edad, inscriptionDate, contact);
 	}
-
 
 }

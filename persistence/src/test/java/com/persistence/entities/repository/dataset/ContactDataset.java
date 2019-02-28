@@ -18,7 +18,9 @@ public final class ContactDataset {
 				new ContactEntity("TESTSYS", "TESTSYS", "665654231435", "sads@sdss.com"),
 				new ContactEntity("TESTSYS", "TESTSYS", "435345345", "fsdf@sdss.com"),
 				new ContactEntity("TESTSYS", "TESTSYS", "66588654231", "fgfh@sdss.com"),
-				new ContactEntity("TESTSYS", "TESTSYS", "665654231", "sads@sfds.com"), };
+				new ContactEntity("TESTSYS", "TESTSYS", "665654231", "sads@sfds.com"),
+				new ContactEntity("TESTSYS", "TESTSYS", "879879854", "fgfh@sdss"),
+				new ContactEntity("TESTSYS", "TESTSYS", "66565425431", "sads@sfds.com")};
 	}
 
 }

@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import static java.util.Objects.requireNonNull;
+
 import com.persistence.entities.parents.BaseEntity;
 
 @Entity
@@ -15,18 +17,19 @@ import com.persistence.entities.parents.BaseEntity;
 public class ContactEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-	
-	@Column(nullable = false, unique=true)
+
+	@Column(nullable = false, unique = true)
 	private String telefono;
-	
-	@Column(nullable = false, unique=true)
+
+	@Column(nullable = false, unique = true)
 	private String email;
-	
+
 	@JoinColumn(name = "CONTACT_ID")
 	@OneToOne(fetch = LAZY)
 	private UserEntity user;
-	
-	public ContactEntity() {
+
+	@SuppressWarnings("unused")
+	private ContactEntity() {
 	}
 
 	/**
@@ -39,21 +42,26 @@ public class ContactEntity extends BaseEntity {
 	 * @param telefono
 	 * @param email
 	 */
-	public ContactEntity(String createdNameBy, String modifiedNameBy, String telefono, String email) {
+	public ContactEntity(final String createdNameBy, final String modifiedNameBy, final String telefono, final String email) {
 		super(createdNameBy, modifiedNameBy);
+		requireNonNull(telefono);
 		this.telefono = telefono;
+		requireNonNull(email);
 		this.email = email;
 	}
 
 	/**
 	 * This constructor is for modification
+	 * 
 	 * @param modifiedNameBy
 	 * @param telefono
 	 * @param email
 	 */
-	public ContactEntity(String modifiedNameBy, String telefono, String email) {
+	public ContactEntity(final String modifiedNameBy, final String telefono, final String email) {
 		super(modifiedNameBy);
+		requireNonNull(telefono);
 		this.telefono = telefono;
+		requireNonNull(email);
 		this.email = email;
 	}
 
@@ -64,7 +72,11 @@ public class ContactEntity extends BaseEntity {
 	public String getEmail() {
 		return email;
 	}
-	
+
+	public void setEmail(final String email) {
+		this.email = email;
+	}
+
 	public UserEntity getUser() {
 		return user;
 	}

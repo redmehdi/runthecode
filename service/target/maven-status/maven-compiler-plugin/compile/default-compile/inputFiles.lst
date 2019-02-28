@@ -3,3 +3,5 @@ D:\workspaces\Spring\runthecode\service\src\main\java\com\service\entities\dto\u
 D:\workspaces\Spring\runthecode\service\src\main\java\com\service\entities\UserService.java
 D:\workspaces\Spring\runthecode\service\src\main\java\com\Application.java
 D:\workspaces\Spring\runthecode\service\src\main\java\com\service\entities\dto\UserDto.java
+D:\workspaces\Spring\runthecode\service\src\main\java\com\service\entities\dto\util\UtilProcessService.java
+D:\workspaces\Spring\runthecode\service\src\main\java\com\service\entities\exception\ValidationException.java
