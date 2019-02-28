@@ -56,12 +56,8 @@
 	<modules>
 		<module>persistence</module>
 		<module>service</module>
-		<module>process</module>
 		<module>rest</module>
-		<module>tests</module>
 	</modules>
-
-
 
 	<dependencyManagement>
 		<dependencies>

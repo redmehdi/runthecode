@@ -1,0 +1,7 @@
+com\service\entities\UserService.class
+com\service\entities\dto\UserDto.class
+com\service\entities\dto\util\UtilProcessService.class
+com\service\entities\dto\util\UserConverter.class
+com\Application.class
+com\service\entities\exception\ValidationException.class
+com\service\entities\UserServiceImpl.class
