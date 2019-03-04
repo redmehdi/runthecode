@@ -2,7 +2,6 @@ package com.service.entities;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.text.ParseException;
 import java.util.List;
 
 import org.junit.Test;
@@ -16,7 +15,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.service.entities.dto.UserDto;
-import com.service.entities.exception.ValidationException;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -30,38 +28,27 @@ public class UserServiceTests {
 
 	@Test
 	public void testFindByLastName() {
-		UserDto user = null;
-		try {
-			user = userService.add(UserDtoDataset.newUsers()[0]);
-		}
-		catch (ParseException | ValidationException e) {
-		}
-		UserDto retrievedUser = userService.getEmail("email1@smtp.fr");
+		final UserDto t = UserDtoDataset.newUsers()[0];
+		boolean user = userService.addOrUpdate(t);
+		assertThat(user).isTrue();
+		List<UserDto> retrievedUser = userService.findByEmail("email1@smtp.fr");
 
-		assertThat(retrievedUser).extracting(UserDto::getNombre).containsOnly(user.getNombre());
+		assertThat(retrievedUser).extracting(UserDto::getNombre).containsOnly(t.getNombre());
 	}
 
 	@Test
 	public void testCreationNewUser() {
 		final UserDto newUser = UserDtoDataset.newUsers()[0];
-		UserDto storedUser = null;
-		try {
-			storedUser = userService.add(newUser);
-		}
-		catch (ParseException | ValidationException e) {
-		}
-		assertThat(storedUser).isNotNull();
+		boolean storedUser = userService.addOrUpdate(newUser);
+		assertThat(storedUser).isTrue();
 	}
 
 	@Test
 	public void testFindByEmail() {
 		final UserDto newUser = UserDtoDataset.newUsers()[0];
-		try {
-			userService.add(newUser);
-		}
-		catch (ParseException | ValidationException e) {
-		}
-		UserDto findByEmail = userService.getEmail(newUser.getEmail());
+		final boolean user = userService.addOrUpdate(newUser);
+		assertThat(user).isTrue();
+		List<UserDto> findByEmail = userService.findByEmail(newUser.getEmail());
 		assertThat(findByEmail).extracting(UserDto::getEmail).containsOnly(newUser.getEmail());
 	}
 
@@ -72,15 +59,14 @@ public class UserServiceTests {
 		UserDto newUser2 = UserDtoDataset.newUsers()[1];
 
 		// insert three users
-		try {
-			userService.add(newUser0);
-			userService.add(newUser1);
-			userService.add(newUser2);
-		}
-		catch (ParseException | ValidationException e) {
-		}
+		boolean user = userService.addOrUpdate(newUser0);
+		assertThat(user).isTrue();
+		user = userService.addOrUpdate(newUser1);
+		assertThat(user).isTrue();
+		user = userService.addOrUpdate(newUser2);
+		assertThat(user).isTrue();
 
-		List<UserDto> userList = userService.getUsers();
+		List<UserDto> userList = userService.getAll();
 		assertThat(userList).hasSize(3);
 	}
 
@@ -90,14 +76,13 @@ public class UserServiceTests {
 		UserDto newUser1 = UserDtoDataset.newUsers()[1];
 
 		// insert two users with the same data user
-		try {
-			userService.add(newUser0);
-			userService.add(newUser1);
-		}
-		catch (ParseException | ValidationException e) {
-		}
+		boolean user = userService.addOrUpdate(newUser0);
+		assertThat(user).isTrue();
+		user = userService.addOrUpdate(newUser1);
+		assertThat(user).isTrue();
 
-		UserDto findByEmail = userService.getEmail(newUser0.getEmail());
+		List<UserDto> findByEmail = userService.findByEmail(newUser0.getEmail());
+		assertThat(findByEmail).extracting(UserDto::getEmail).containsOnly(newUser1.getEmail());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -105,13 +90,10 @@ public class UserServiceTests {
 		UserDto newUser0 = UserDtoDataset.newUsers()[5];
 
 		// insert user with incorrect email
-		try {
-			userService.add(newUser0);
-		}
-		catch (ParseException | ValidationException e) {
-		}
+		boolean user = userService.addOrUpdate(newUser0);
+		assertThat(user).isTrue();
 
-		UserDto findByEmail = userService.getEmail(newUser0.getEmail());
+		List<UserDto> findByEmail = userService.findByEmail(newUser0.getEmail());
 	}
 
 }

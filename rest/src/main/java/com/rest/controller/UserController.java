@@ -1,7 +1,9 @@
 package com.rest.controller;
 
-import java.text.ParseException;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -13,14 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rest.controller.exception.UserDataException;
+import com.service.converter.UserConverter;
 import com.service.entities.UserService;
 import com.service.entities.dto.UserDto;
-import com.service.entities.exception.ValidationException;
 
 @RestController
 @ComponentScan("com.*")
 public class UserController {
+
+	private static final Logger log = LoggerFactory.getLogger(UserConverter.class);
 
 	@Autowired
 	private final UserService service;
@@ -30,23 +33,23 @@ public class UserController {
 	}
 
 	@RequestMapping("/user")
-	public UserDto getUser(@RequestParam(value = "email", defaultValue = "") String email) {
-		return service.getEmail(email);
+	public List<UserDto> getUser(@RequestParam(value = "email", defaultValue = "") String email) {
+		return service.findByEmail(email);
 	}
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/add")
-	public @ResponseStatus(value = HttpStatus.CREATED) void newUser(@RequestBody UserDtoRequest user) {
+	public @ResponseStatus(value = HttpStatus.CREATED) String newUser(@RequestBody UserDtoRequest user) {
 
 		UserDto userR = new UserDto(user.getNombre(), user.getApellido(), user.getEdad(), user.getInscriptionDate(),
 				user.getTelefono(), user.getEmail(), user.getChangeBy());
-		UserDto userDto;
-		try {
-			userDto = service.add(userR);
-		} catch (ParseException | ValidationException e) {
-			throw new UserDataException(userR);
+		boolean userDto = service.addOrUpdate(userR);
+		if (!userDto) {
+			log.error("The user is not registered check the data");
+			return "The user is not registed; les donnees sont incorrect: " + user.getEmail();
 		}
+		log.info("The user is registed: " + user.getEmail());
+		return "The user is registed: " + user.getEmail();
 
-		System.out.println("test " + userDto.toString());
 	}
 
 }

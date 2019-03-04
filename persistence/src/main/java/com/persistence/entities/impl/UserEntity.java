@@ -9,8 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.persistence.entities.parents.BaseEntity;
-import com.persistence.entities.parents.IEntity;
+import com.base.persistence.BaseEntity;
+import com.base.persistence.IEntity;
 
 /**
  * @author RMehdi

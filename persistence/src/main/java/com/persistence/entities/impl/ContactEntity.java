@@ -1,5 +1,6 @@
 package com.persistence.entities.impl;
 
+import static java.util.Objects.requireNonNull;
 import static javax.persistence.FetchType.LAZY;
 
 import javax.persistence.Column;
@@ -8,9 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import static java.util.Objects.requireNonNull;
-
-import com.persistence.entities.parents.BaseEntity;
+import com.base.persistence.BaseEntity;
 
 @Entity
 @Table(name = "contact")

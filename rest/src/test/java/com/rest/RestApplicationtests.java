@@ -1,9 +1,7 @@
 package com.rest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -16,13 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.rest.controller.UserDtoRequest;
-import com.service.entities.dto.UserDto;
-
-//import com.rest.controller.UserController;
-//import com.service.entities.UserService;
-//import com.service.entities.dto.UserDto;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -47,6 +39,10 @@ public class RestApplicationtests {
 
 		String json = gson.toJson(dtoRequest);
 		this.mockMvc.perform(post("/add").contentType(MediaType.APPLICATION_JSON).content(json)).andDo(print())
+				.andExpect(status().isCreated());
+		
+		json = gson.toJson(dtoRequest.getEmail());
+		this.mockMvc.perform(post("/user").contentType(MediaType.APPLICATION_JSON).content(json)).andDo(print())
 				.andExpect(status().isCreated());
 	}
 

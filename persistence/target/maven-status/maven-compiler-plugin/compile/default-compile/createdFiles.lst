@@ -1,7 +1,4 @@
-com\util\UtilProcess.class
 com\persistence\entities\impl\ContactEntity.class
 com\persistence\entities\impl\UserEntity.class
-com\persistence\entities\parents\IEntity.class
 com\Application.class
 com\persistence\entities\respository\UserRepository.class
-com\persistence\entities\parents\BaseEntity.class

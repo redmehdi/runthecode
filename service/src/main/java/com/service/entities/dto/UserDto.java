@@ -1,10 +1,14 @@
 package com.service.entities.dto;
 
+import com.base.dto.IDto;
+
 /**
  * @author RMehdi
  *
  */
-public class UserDto {
+public class UserDto implements IDto {
+
+	private static final long serialVersionUID = 1L;
 
 	private String id;
 
@@ -34,16 +38,8 @@ public class UserDto {
 	 * @param email
 	 * @param changeBy
 	 */
-	public UserDto(
-			final String id, 
-			final String nombre, 
-			final String apellido, 
-			final String edad, 
-			final String inscriptionDate, 
-			final String telefono,
-			final String email, 
-			final String changeBy
-			) {
+	public UserDto(final String id, final String nombre, final String apellido, final String edad,
+			final String inscriptionDate, final String telefono, final String email, final String changeBy) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -65,15 +61,8 @@ public class UserDto {
 	 * @param email
 	 * @param changeBy
 	 */
-	public UserDto(
-			final String nombre, 
-			final String apellido, 
-			final String edad, 
-			final String inscriptionDate, 
-			final String telefono, 
-			final String email,
-			final String changeBy
-			) {
+	public UserDto(final String nombre, final String apellido, final String edad, final String inscriptionDate,
+			final String telefono, final String email, final String changeBy) {
 		this(null, nombre, apellido, edad, inscriptionDate, telefono, email, changeBy);
 	}
 

@@ -1,18 +1,18 @@
-package com.service.entities.dto.util;
+package com.service.converter;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.ComponentScan;
 
+import com.base.converter.BaseConverter;
+import com.base.exception.ValidationException;
+import com.base.util.UtilProcess;
 import com.persistence.entities.impl.ContactEntity;
 import com.persistence.entities.impl.UserEntity;
 import com.service.entities.dto.UserDto;
-import com.service.entities.exception.ValidationException;
 
 /**
  * @author RMehdi
@@ -20,87 +20,60 @@ import com.service.entities.exception.ValidationException;
  *
  */
 @ComponentScan({ "com.*" })
-public final class UserConverter {
+public final class UserConverter extends BaseConverter<UserEntity, UserDto> {
 
 	private static final Logger log = LoggerFactory.getLogger(UserConverter.class);
 
-	/**
-	 * Converter for creation of new user
-	 * 
-	 * @param dto
-	 * @return {@link UserEntity}
-	 * @throws ParseException
-	 * @throws ValidationException
-	 */
-	public static UserEntity getUserEntityNew(UserDto dto) throws ParseException, ValidationException {
-
-		log.debug("create new user" + dto.getEmail());
-		final String nombre = dto.getNombre();
-		final String apellido = dto.getApellido();
-		final String email = UtilProcessService.validateEmail(dto.getEmail());
-		final String telefono = dto.getTelefono();
-		final Long edad = UtilProcessService.stringToLong(dto.getEdad());
-		final Date inscriptionDate = UtilProcessService.stringToDate(dto.getInscriptionDate());
-		final String modifiedNameBy = dto.getChangeBy();
-		final ContactEntity contact = new ContactEntity(modifiedNameBy, modifiedNameBy, telefono, email);
-
-		return new UserEntity(modifiedNameBy, modifiedNameBy, contact, nombre, apellido, edad, inscriptionDate);
-	}
-
-	/**
-	 * Converter for modification of existing user
-	 * 
-	 * @param dto
-	 * @return {@link UserEntity}
-	 * @throws ParseException
-	 * @throws ValidationException
-	 */
-	public static UserEntity getUserEntityModify(UserDto dto) throws ParseException, ValidationException {
-
-		log.debug("modify user" + dto.getEmail());
-		final String nombre = dto.getNombre();
-		final String apellido = dto.getApellido();
-		final String email = UtilProcessService.validateEmail(dto.getEmail());
-		final String telefono = UtilProcessService.validatePhone(dto.getTelefono());
-		final Long edad = UtilProcessService.stringToLong(dto.getEdad());
-		final Date inscriptionDate = UtilProcessService.stringToDate(dto.getInscriptionDate());
-		final String modifiedNameBy = dto.getChangeBy();
-		final ContactEntity contact = new ContactEntity(modifiedNameBy, telefono, email);
-
-		return new UserEntity(modifiedNameBy, contact, nombre, apellido, edad, inscriptionDate);
-	}
-
-	/**
-	 * Converter to retrieve stored user
-	 * 
-	 * @param dto
-	 * @return {@link UserEntity}
-	 * @throws ParseException
-	 * @throws ValidationException
-	 */
-	public static UserDto getUserDto(UserEntity entity) {
-
-		final ContactEntity contact = entity.getContact();
-		String email = "";
-		String telefono = "";
-		if (contact != null) {
-			telefono = contact.getTelefono();
-			email = contact.getEmail();
-
+	@Override
+	public UserDto getDto(UserEntity e) {
+		final ContactEntity contacto = e.getContact();
+		String email = null;
+		String telefono = null;
+		final String nombre = e.getNombre();
+		final String apellido = e.getApellido();
+		final Long edad = e.getEdad();
+		final Date inscriptionDate = e.getInscriptionDate();
+		final String modifiedNameBy = e.getModifiedNameBy();
+		log.debug("create new user: " + apellido);
+		if (contacto != null) {
+			telefono = contacto.getTelefono();
+			try {
+				email = UtilProcess.validateEmail(contacto.getEmail());
+				log.debug("create new user with contact data" + contacto.getEmail());
+			} catch (ValidationException e1) {
+				log.error("the email is " + email + "inscription date is incorrect", e1);
+			}
 		}
-		return new UserDto(entity.getIdExt(), entity.getNombre(), entity.getApellido(), entity.getEdad().toString(),
-				entity.getInscriptionDate().toString(), telefono, email, entity.getModifiedNameBy());
+
+		return new UserDto(e.getIdExt(), nombre, apellido, edad.toString(), inscriptionDate.toString(), telefono, email,
+				modifiedNameBy);
 	}
 
-	public static List<UserDto> getUserDtos(Iterable<UserEntity> findAll) {
+	@Override
+	public UserEntity getEntity(UserDto t) {
+		log.debug("create new user" + t.getEmail());
+		final String nombre = t.getNombre();
+		final String apellido = t.getApellido();
+		final String telefono = t.getTelefono();
+		final Long edad = UtilProcess.stringToLong(t.getEdad());
+		final String modifiedNameBy = t.getChangeBy();
+		String email = null;
+		Date inscriptionDate = null;
 
-		List<UserDto> dtos = new ArrayList<>();
-		findAll.forEach(
-				(k) -> dtos.add(new UserDto(k.getIdExt(), k.getNombre(), k.getApellido(), k.getEdad().toString(),
-						k.getInscriptionDate().toString(), k.getContact() != null ? k.getContact().getTelefono() : "",
-						k.getContact() != null ? k.getContact().getEmail() : "", k.getModifiedNameBy())));
+		try {
+			email = UtilProcess.validateEmail(t.getEmail());
+			inscriptionDate = UtilProcess.stringToDate(t.getInscriptionDate());
+		} catch (ValidationException | ParseException e) {
+			log.error("the email is " + t.getEmail() + "inscription date is incorrect" + t.getInscriptionDate(), e);
+		}
 
-		return dtos;
+		final ContactEntity contact = t.getId() == null
+				? new ContactEntity(modifiedNameBy, modifiedNameBy, telefono, email)
+				: new ContactEntity(modifiedNameBy, telefono, email);
+
+		return t.getId() == null
+				? new UserEntity(modifiedNameBy, modifiedNameBy, contact, nombre, apellido, edad, inscriptionDate)
+				: new UserEntity(modifiedNameBy, contact, nombre, apellido, edad, inscriptionDate);
 	}
 
 }
